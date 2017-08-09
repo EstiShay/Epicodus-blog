@@ -100,6 +100,14 @@ public class PostTest {
         assertEquals(Post.getAll().get(0).getId(), 2); //the one that was deleted has the id of 2. Why do we care?
     }
 
+    @Test
+    public void deleteAllPostsDeletesAllPosts() throws Exception {
+        Post post = setupNewPost();
+        Post otherPost = setupNewPost();
+        Post.clearAllPosts();
+        assertEquals(0, Post.getAll().size());
+    }
+
     //helper
     public Post setupNewPost(){
         return new Post("Day 1: Intro");

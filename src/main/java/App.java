@@ -35,6 +35,13 @@ public class App {
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //get: delete all posts
+        get("/posts/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Post.clearAllPosts();
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
+
         //get: show an individual post
         get("/posts/:id", (request, response) ->  {
             Map<String, Object> model = new HashMap<>();
@@ -74,7 +81,5 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-
-        //get: delete all posts
     }
 }
