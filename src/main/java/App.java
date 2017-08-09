@@ -14,7 +14,7 @@ public class App {
         //get: show new post form
         get("/posts/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "newpost-form.hbs");
+            return new ModelAndView(model, "post-form.hbs");
         }, new HandlebarsTemplateEngine());
 
 
@@ -45,8 +45,24 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         //get: show a form to update a post
+        get("/posts/:id/update", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfPostToEdit = Integer.parseInt(req.params("id"));
+            Post editPost = Post.findById(idOfPostToEdit);
+            model.put("editPost", editPost);
+            return new ModelAndView(model, "post-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
         //post: process a form to update a post
+        post("/posts/:id/update", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String newContent = req.queryParams("content");
+            int idOfPostToEdit = Integer.parseInt(req.params("id"));
+            Post editPost = Post.findById(idOfPostToEdit);
+            editPost.update(newContent);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
 
         //get: delete an individual post
 
